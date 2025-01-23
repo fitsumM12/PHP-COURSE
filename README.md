@@ -82,7 +82,7 @@ Contributions are welcome! If you’d like to add improvements, follow these ste
 
 ## 📜 License
 
-This project is licensed under the MIT License. Feel free to use and modify.
+Credit @fitse.fani. Feel free to use and modify.
 
 ---
 
