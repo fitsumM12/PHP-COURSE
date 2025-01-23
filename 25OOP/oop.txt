@@ -1,0 +1,999 @@
+Object-Oriented PHP for Beginners
+For many PHP programmers, object-oriented programming is a frightening concept, full of complicated syntax and other roadblocks. Object-oriented programming (OOP) is a style of coding in which related actions are grouped into classes to aid in creating more-compact, effective code.
+
+Understanding Object-Oriented Programming
+Object-oriented programming is a style of coding that allows developers to group similar tasks into classes. This helps keep code following the tenet "don't repeat yourself" (DRY) and easy-to-maintain.
+
+    "Object-oriented programming is a style of coding that allows developers to group similar tasks into classes."
+One of the major benefits of DRY programming is that, if a piece of information changes in your program, usually only one change is required to update the code. One of the biggest nightmares for developers is maintaining code where data is declared over and over again, meaning any changes to the program become an infinitely more frustrating game of Where's Waldo? as they hunt for duplicated data and functionality.
+
+OOP is intimidating to a lot of developers because it introduces new syntax and, at a glance, appears to be far more complex than simple procedural, or inline, code. However, upon closer inspection, OOP is actually a very straightforward and ultimately simpler approach to programming.
+Understanding Objects and Classes
+
+Before you can get too deep into the finer points of OOP, a basic understanding of the differences between objects and classes is necessary. This section will go over the building blocks of classes, their different capabilities, and some of their uses.
+Recognizing the Differences Between Objects and Classes
+Photos by Instant Jefferson and John Wardell
+
+    Developers start talking about objects and classes, and they appear to be interchangeable terms. This is not the case, however.
+
+Right off the bat, there's confusion in OOP: seasoned developers start talking about objects and classes, and they appear to be interchangeable terms. This is not the case, however, though the difference can be tough to wrap your head around at first.
+
+A class, for example, is like a blueprint for a house. It defines the shape of the house on paper, with relationships between the different parts of the house clearly defined and planned out, even though the house doesn't exist.
+
+An object, then, is like the actual house built according to that blueprint. The data stored in the object is like the wood, wires, and concrete that compose the house: without being assembled according to the blueprint, it's just a pile of stuff. However, when it all comes together, it becomes an organized, useful house.
+
+Classes form the structure of data and actions and use that information to build objects. More than one object can be built from the same class at the same time, each one independent of the others. Continuing with our construction analogy, it's similar to the way an entire subdivision can be built from the same blueprint: 150 different houses that all look the same but have different
+families and decorations inside.
+Structuring Classes
+
+The syntax to create a class is pretty straightforward: declare a class using the class keyword, followed by the name of the class and a set of curly braces ({}):
+
+<?php
+ 
+class MyClass
+{
+  // Class properties and methods go here
+}
+ 
+?>
+
+After creating the class, a new class can be instantiated and stored in a variable using the new keyword:
+$obj = new MyClass;
+To see the contents of the class, use var_dump():
+
+var_dump($obj);
+
+Try out this process by putting all the preceding code in a new file called test.php in [your local] testing folder:
+	
+<?php
+ 
+class MyClass
+{
+    // Class properties and methods go here
+}
+ 
+$obj = new MyClass;
+ 
+var_dump($obj);
+ 
+?>
+
+Load the page in your browser at http://localhost/test.php and the following should display:
+	
+object(MyClass)#1 (0) { }
+
+In its simplest form, you've just completed your first OOP script.
+Defining Class Properties
+
+To add data to a class, properties, or class-specific variables, are used. These work exactly like regular variables, except they're bound to the object and therefore can only be accessed using the object.
+To add a property to MyClass, add the following code to your script:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+}
+ 
+$obj = new MyClass;
+ 
+var_dump($obj);
+ 
+?>
+
+The keyword public determines the visibility of the property. Next, the property is named using standard variable syntax, and a value is assigned (though class properties do not need an initial value).
+
+To read this property and output it to the browser, reference the object from which to read and the property to be read:
+	
+echo $obj->prop1;
+
+Because multiple instances of a class can exist, if the individual object is not referenced, the script would be unable to determine which object to read from. The use of the arrow (->) is an OOP construct that accesses the contained properties and methods of a given object.
+
+Modify the script in test.php to read out the property rather than dumping the whole class by modifying the code as shown:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+}
+ 
+$obj = new MyClass;
+ 
+echo $obj->prop1; // Output the property
+ 
+?>
+
+Reloading your browser now outputs the following:
+
+I'm a class property!
+
+Defining Class Methods
+Methods are class-specific functions. Individual actions that an object will be able to perform are defined within the class as methods.
+
+For instance, to create methods that would set and get the value of the class property $prop1, add the following to your code:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+$obj = new MyClass;
+ 
+echo $obj->prop1;
+echo $obj->getProperty();
+ 
+?>
+
+OOP allows objects to reference themselves using $this. When working within a method, use $this in the same way you would use the object name outside the class.
+
+To use these methods, call them just like regular functions, but first, reference the object they belong to. Read the property from MyClass, change its value, and read it out again by making the modifications below:
+	
+<?php
+ 
+class MyClass
+{
+  private $prop1 = "I'm a class property!";
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+$obj = new MyClass;
+ 
+echo $obj->getProperty(); // Get the property value
+ 
+$obj->setProperty("I'm a new property value!"); // Set a new one
+ 
+echo $obj->getProperty(); // Read it out again to show the change
+ 
+?>
+
+Reload your browser, and you'll see the following:
+
+I'm a class property!
+I'm a new property value!
+
+    "The power of OOP becomes apparent when using multiple instances of the
+    same class."
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+// Create two objects
+$obj = new MyClass;
+$obj2 = new MyClass;
+ 
+// Get the value of $prop1 from both objects
+echo $obj->getProperty();
+echo $obj2->getProperty();
+ 
+// Set new values for both objects
+$obj->setProperty("I'm a new property value!");
+$obj2->setProperty("I belong to the second instance!");
+ 
+// Output both objects' $prop1 value
+echo $obj->getProperty();
+echo $obj2->getProperty();
+ 
+?>
+
+When you load the results in your browser, they read as follows:
+	
+I'm a class property!
+I'm a class property!
+I'm a new property value!
+I belong to the second instance!
+
+As you can see, OOP keeps objects as separate entities, which makes for easy separation of different pieces of code into small, related bundles.
+Magic Methods in OOP
+
+To make the use of objects easier, PHP also provides a number of magic methods, or special methods that are called when certain common actions occur within objects. This allows developers to perform a number of useful tasks with relative ease.
+Using Constructors and Destructors
+
+When an object is instantiated, it's often desirable to set a few things right off the bat. To handle this, PHP provides the magic method __construct(), which is called automatically whenever a new object is
+created.
+
+For the purpose of illustrating the concept of constructors, add a constructor to MyClass that will output a message whenever a new instance of the class is created:
+	
+<?php
+ 
+class MyClass
+{
+  private $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+// Create a new object
+$obj = new MyClass;
+ 
+// Get the value of $prop1
+echo $obj->getProperty();
+ 
+// Output a message at the end of the file
+echo "End of file.<br />";
+ 
+?>
+
+__CLASS__ returns the name of the class in which it is called; this is what is known as a magic constant. There are several available magic constants, which you can read more about in the PHP manual.
+
+Reloading the file in your browser will produce the following result:
+	
+The class "MyClass" was initiated!
+I'm a class property!
+End of file.
+
+To call a function when the object is destroyed, the __destruct() magic method is available. This is useful for class cleanup (closing a database connection, for instance).
+
+Output a message when the object is destroyed by defining the magic method
+__destruct() in MyClass:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+// Create a new object
+$obj = new MyClass;
+ 
+// Get the value of $prop1
+echo $obj->getProperty();
+ 
+// Output a message at the end of the file
+echo "End of file.<br />";
+ 
+?>
+
+With a destructor defined, reloading the test file results in the following output:
+	
+The class "MyClass" was initiated!
+I'm a class property!
+End of file.
+The class "MyClass" was destroyed.
+
+    "When the end of a file is reached, PHP automatically releases all resources."
+
+To explicitly trigger the destructor, you can destroy the object using the
+function unset():
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+// Create a new object
+$obj = new MyClass;
+ 
+// Get the value of $prop1
+echo $obj->getProperty();
+ 
+// Destroy the object
+unset($obj);
+ 
+// Output a message at the end of the file
+echo "End of file.<br />";
+ 
+?>
+
+Now the result changes to the following when loaded in your browser:
+	
+The class "MyClass" was initiated!
+I'm a class property!
+The class "MyClass" was destroyed.
+End of file.
+Converting to a String
+
+To avoid an error if a script attempts to output MyClass as a string, another magic method is used called __toString().
+
+Without __toString(), attempting to output the object as a string results in a fatal error. Attempt to use echo to output the object without a magic method in place:
+
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+// Create a new object
+$obj = new MyClass;
+ 
+// Output the object as a string
+echo $obj;
+ 
+// Destroy the object
+unset($obj);
+ 
+// Output a message at the end of the file
+echo "End of file.<br />";
+ 
+?>
+
+This results in the following:
+1
+2
+3
+	
+The class "MyClass" was initiated!
+ 
+Catchable fatal error: Object of class MyClass could not be converted to string in /Applications/XAMPP/xamppfiles/htdocs/testing/test.php on line 40
+
+To avoid this error, add a __toString() method:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+// Create a new object
+$obj = new MyClass;
+ 
+// Output the object as a string
+echo $obj;
+ 
+// Destroy the object
+unset($obj);
+ 
+// Output a message at the end of the file
+echo "End of file.<br />";
+ 
+?>
+
+In this case, attempting to convert the object to a string results in a call to the getProperty() method. Load the test script in your browser to see the result:
+	
+The class "MyClass" was initiated!
+Using the toString method: I'm a class property!
+The class "MyClass" was destroyed.
+End of file.
+
+Tip — In addition to the magic methods discussed in this section, several others are available. For a complete list of magic methods, see the PHP manual page.
+Using Class Inheritance
+
+Classes can inherit the methods and properties of another class using the extends keyword. For instance, to create a second class that extends MyClass and adds a method, you would add the following to your test file:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+}
+ 
+// Create a new object
+$newobj = new MyOtherClass;
+ 
+// Output the object as a string
+echo $newobj->newMethod();
+ 
+// Use a method from the parent class
+echo $newobj->getProperty();
+ 
+?>
+
+Upon reloading the test file in your browser, the following is output:
+	
+The class "MyClass" was initiated!
+From a new method in MyOtherClass.
+I'm a class property!
+The class "MyClass" was destroyed.
+Overwriting Inherited Properties and Methods
+
+To change the behavior of an existing property or method in the new class, you can simply overwrite it by declaring it again in the new class:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function __construct()
+  {
+      echo "A new constructor in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+}
+ 
+// Create a new object
+$newobj = new MyOtherClass;
+ 
+// Output the object as a string
+echo $newobj->newMethod();
+ 
+// Use a method from the parent class
+echo $newobj->getProperty();
+ 
+?>
+
+This changes the output in the browser to:
+	
+A new constructor in MyOtherClass.
+From a new method in MyOtherClass.
+I'm a class property!
+The class "MyClass" was destroyed.
+Preserving Original Method Functionality While Overwriting Methods
+
+To add new functionality to an inherited method while keeping the original method intact, use the parent keyword with the scope resolution operator (::):
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  public function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function __construct()
+  {
+      parent::__construct(); // Call the parent class's constructor
+      echo "A new constructor in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+}
+ 
+// Create a new object
+$newobj = new MyOtherClass;
+ 
+// Output the object as a string
+echo $newobj->newMethod();
+ 
+// Use a method from the parent class
+echo $newobj->getProperty();
+ 
+?>
+
+This outputs the result of both the parent constructor and the new class's constructor:
+	
+The class "MyClass" was initiated!
+A new constructor in MyOtherClass.
+From a new method in MyOtherClass.
+I'm a class property!
+The class "MyClass" was destroyed.
+
+Assigning the Visibility of Properties and Methods
+For added control over objects, methods and properties are assigned visibility. This controls how and from where properties and methods can be accessed. There are three visibility keywords: public, protected, and private. In addition to its visibility, a method or property can be declared as static, which allows them to be accessed without an instantiation of the class.
+
+    "For added control over objects, methods and properties are assigned visibility."
+
+Note — Visibility is a new feature as of PHP 5. For information on OOP compatibility with PHP 4, see the PHP manual page.
+
+Public Properties and Methods
+All the methods and properties you've used so far have been public. This means that they can be accessed anywhere, both within the class and externally.
+Protected Properties and Methods
+
+When a property or method is declared protected, it can only be accessed within the class itself or in descendant classes (classes that extend the class containing the protected method).
+
+Declare the getProperty() method as protected in MyClass and try to access it directly from outside the class:
+
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  protected function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function __construct()
+  {
+      parent::__construct();
+echo "A new constructor in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+}
+ 
+// Create a new object
+$newobj = new MyOtherClass;
+ 
+// Attempt to call a protected method
+echo $newobj->getProperty();
+ 
+?>
+
+Upon attempting to run this script, the following error shows up:
+1
+2
+3
+4
+	
+The class "MyClass" was initiated!
+A new constructor in MyOtherClass.
+ 
+Fatal error: Call to protected method MyClass::getProperty() from context '' in /Applications/XAMPP/xamppfiles/htdocs/testing/test.php on line 55
+
+Now, create a new method in MyOtherClass to call the getProperty() method:
+
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  protected function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function __construct()
+  {
+      parent::__construct();
+echo "A new constructor in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function callProtected()
+  {
+      return $this->getProperty();
+  }
+}
+ 
+// Create a new object
+$newobj = new MyOtherClass;
+ 
+// Call the protected method from within a public method
+echo $newobj->callProtected();
+ 
+?>
+
+This generates the desired result:
+	
+The class "MyClass" was initiated!
+A new constructor in MyOtherClass.
+I'm a class property!
+The class "MyClass" was destroyed.
+Private Properties and Methods
+
+A property or method declared private is accessible only from within the class that defines it. This means that even if a new class extends the class that defines a private property, that property or method will not be available at all within the child class.
+
+To demonstrate this, declare getProperty() as private in MyClass, and attempt to call callProtected() from
+MyOtherClass:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  private function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function __construct()
+  {
+      parent::__construct();
+      echo "A new constructor in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function callProtected()
+  {
+      return $this->getProperty();
+  }
+}
+ 
+// Create a new object
+$newobj = new MyOtherClass;
+ 
+// Use a method from the parent class
+echo $newobj->callProtected();
+ 
+?>
+
+Reload your browser, and the following error appears:
+	
+The class "MyClass" was initiated!
+A new constructor in MyOtherClass.
+ 
+Fatal error: Call to private method MyClass::getProperty() from context 'MyOtherClass' in /Applications/XAMPP/xamppfiles/htdocs/testing/test.php on line 49
+
+Static Properties and Methods
+A method or property declared static can be accessed without first instantiating the class; you simply supply the class name, scope resolution operator, and the property or method name.
+
+    "One of the major benefits to using static properties is that they keep their stored values for the duration of the script."
+
+To demonstrate this, add a static property called $count and a static method called plusOne() to MyClass. Then set up a do...while loop to output the incremented value of $count as long as the value is less than 10:
+	
+<?php
+ 
+class MyClass
+{
+  public $prop1 = "I'm a class property!";
+ 
+  public static $count = 0;
+ 
+  public function __construct()
+  {
+      echo 'The class "', __CLASS__, '" was initiated!<br />';
+  }
+ 
+  public function __destruct()
+  {
+      echo 'The class "', __CLASS__, '" was destroyed.<br />';
+  }
+ 
+  public function __toString()
+  {
+      echo "Using the toString method: ";
+      return $this->getProperty();
+  }
+ 
+  public function setProperty($newval)
+  {
+      $this->prop1 = $newval;
+  }
+ 
+  private function getProperty()
+  {
+      return $this->prop1 . "<br />";
+  }
+ 
+  public static function plusOne()
+  {
+      return "The count is " . ++self::$count . ".<br />";
+  }
+}
+ 
+class MyOtherClass extends MyClass
+{
+  public function __construct()
+  {
+      parent::__construct();
+      echo "A new constructor in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function newMethod()
+  {
+      echo "From a new method in " . __CLASS__ . ".<br />";
+  }
+ 
+  public function callProtected()
+  {
+      return $this->getProperty();
+  }
+}
+ 
+do
+{
+  // Call plusOne without instantiating MyClass
+  echo MyClass::plusOne();
+} while ( MyClass::$count < 10 );
+ 
+?>
+
+Note — When accessing static properties, the dollar sign
+($) comes after the scope resolution operator.
+
+When you load this script in your browser, the following is output:
+	
+The count is 1.
+The count is 2.
+The count is 3.
+The count is 4.
+The count is 5.
+The count is 6.
+The count is 7.
+The count is 8.
+The count is 9.
+The count is 10.
