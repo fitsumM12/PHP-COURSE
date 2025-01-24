@@ -39,7 +39,7 @@ Each folder contains explanations, examples, and exercises to help you grasp PHP
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-repo-url.git
+   git clone https://github.com/fitsumM12/PHP-COURSE.git
    ```
 
 2. **Navigate to any topic:**
